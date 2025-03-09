@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3 uid="uid://x3lrmet87ymu"]
+
+[ext_resource type="Script" uid="uid://doo76vke7ot3v" path="res://Scripts/Multiplayer/MultiplayerControl.gd" id="1_bpe3w"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bpe3w")
+
+[node name="Host" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -37.0
+offset_right = -149.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Host"
+
+[node name="Join" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = -36.0
+offset_right = 113.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Join"
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 140.0
+offset_top = -37.0
+offset_right = 366.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Start"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 329.0
+offset_top = 145.0
+offset_right = 902.0
+offset_bottom = 214.0
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Input name"
+
+[node name="Label" type="Label" parent="LineEdit"]
+layout_mode = 0
+offset_left = -112.0
+offset_top = 12.0
+offset_right = -22.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 32
+text = "Name"
+
+[connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
+[connection signal="button_down" from="Start" to="." method="_on_start_button_down"]
