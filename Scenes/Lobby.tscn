@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://x3lrmet87ymu"]
+[gd_scene load_steps=3 format=3 uid="uid://x3lrmet87ymu"]
 
 [ext_resource type="Script" uid="uid://doo76vke7ot3v" path="res://Scripts/Multiplayer/MultiplayerControl.gd" id="1_bpe3w"]
+[ext_resource type="Script" uid="uid://u6v0f8hv7fbi" path="res://Scripts/Multiplayer/difficulty_level.gd" id="2_lolwk"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -13,69 +14,128 @@ script = ExtResource("1_bpe3w")
 
 [node name="Host" type="Button" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -375.0
-offset_top = -37.0
-offset_right = -149.0
-offset_bottom = 38.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 160.0
+offset_top = -148.0
+offset_right = 400.0
+offset_bottom = -68.0
+grow_vertical = 0
 theme_override_font_sizes/font_size = 48
 text = "Host"
 
 [node name="Join" type="Button" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -113.0
-offset_top = -36.0
-offset_right = 113.0
-offset_bottom = 36.0
+anchor_bottom = 1.0
+offset_left = -116.0
+offset_top = -148.0
+offset_right = 124.0
+offset_bottom = -68.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 theme_override_font_sizes/font_size = 48
 text = "Join"
 
 [node name="Start" type="Button" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 140.0
-offset_top = -37.0
-offset_right = 366.0
-offset_bottom = 38.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -392.0
+offset_top = -148.0
+offset_right = -152.0
+offset_bottom = -68.0
+grow_horizontal = 0
+grow_vertical = 0
 theme_override_font_sizes/font_size = 48
 text = "Start"
 
-[node name="LineEdit" type="LineEdit" parent="."]
+[node name="InputGroup" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LineEdit" type="LineEdit" parent="InputGroup"]
 layout_mode = 0
-offset_left = 329.0
-offset_top = 145.0
-offset_right = 902.0
-offset_bottom = 214.0
+offset_left = 248.0
+offset_top = 80.0
+offset_right = 636.0
+offset_bottom = 149.0
 theme_override_font_sizes/font_size = 32
 placeholder_text = "Input name"
 
-[node name="Label" type="Label" parent="LineEdit"]
+[node name="LabelName" type="Label" parent="InputGroup"]
 layout_mode = 0
-offset_left = -112.0
-offset_top = 12.0
-offset_right = -22.0
-offset_bottom = 61.0
+offset_left = 136.0
+offset_top = 92.0
+offset_right = 229.0
+offset_bottom = 141.0
 theme_override_font_sizes/font_size = 32
 text = "Name"
+
+[node name="LabelCharacter" type="Label" parent="InputGroup"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 166.0
+offset_right = 232.0
+offset_bottom = 217.0
+theme_override_font_sizes/font_size = 32
+text = "Character"
+
+[node name="CharacterSelect" type="ItemList" parent="InputGroup"]
+layout_mode = 0
+offset_left = 249.0
+offset_top = 165.0
+offset_right = 664.0
+offset_bottom = 354.0
+allow_reselect = true
+allow_search = false
+max_text_lines = 2
+auto_width = true
+auto_height = true
+text_overrun_behavior = 0
+wraparound_items = false
+item_count = 3
+item_0/text = "Knight: Fight enemies head-on and take a hit or two"
+item_1/text = "Wizard: Fight from a distance and clean up hazards"
+item_2/text = "Wordsmith: Avoid the enemies and solve the puzzle."
+
+[node name="DifficultySlider" type="HSlider" parent="InputGroup"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = 376.0
+offset_right = 594.0
+offset_bottom = 406.0
+min_value = 1.0
+max_value = 5.0
+value = 1.0
+
+[node name="DifficultyLevel" type="Label" parent="InputGroup"]
+layout_mode = 0
+offset_left = 602.0
+offset_top = 364.0
+offset_right = 659.0
+offset_bottom = 413.0
+theme_override_font_sizes/font_size = 32
+text = "1"
+horizontal_alignment = 1
+script = ExtResource("2_lolwk")
+
+[node name="LabelDifficulty" type="Label" parent="InputGroup"]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 362.0
+offset_right = 230.0
+offset_bottom = 411.0
+theme_override_font_sizes/font_size = 32
+text = "Difficulty"
 
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]

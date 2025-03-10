@@ -11,3 +11,5 @@ func _input(event: InputEvent) -> void:
 			erase_cell(selected_cell)
 			selected_cell = click
 			set_cell(selected_cell, cell_consts.MAIN_SRC_ID, cell_consts.SELECTED_CELL)
+		else:
+			pass

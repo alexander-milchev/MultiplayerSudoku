@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://6abf5bypw130"]
+[gd_scene load_steps=27 format=4 uid="uid://6abf5bypw130"]
 
 [ext_resource type="Script" uid="uid://b34eut5w6o7y6" path="res://Scripts/BoardsFrontend.gd" id="1_cpm0q"]
 [ext_resource type="Texture2D" uid="uid://c2o5raj6vtruy" path="res://Assets/Numbers&Cells.png" id="2_4woqn"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://dkjsd8dechs8q" path="res://Assets/Grass&Dirt&Water.png" id="3_kilg5"]
 [ext_resource type="PackedScene" uid="uid://5ivvgqd4qr1b" path="res://Scenes/Characters/Knight.tscn" id="3_leul7"]
 [ext_resource type="Script" uid="uid://d0b6hgkqc60ut" path="res://Scripts/SelectionLayer.gd" id="4_uxwto"]
-[ext_resource type="Script" uid="uid://knpwfb51gkld" path="res://Scenes/CameraScript.gd" id="8_pgw7i"]
+[ext_resource type="PackedScene" uid="uid://b4p8x2u82448d" path="res://Scenes/Characters/Wizard.tscn" id="4_wukv0"]
+[ext_resource type="PackedScene" uid="uid://bmhgjamtx270c" path="res://Scenes/Characters/Wordsmith.tscn" id="5_hgvmy"]
+[ext_resource type="Script" uid="uid://knpwfb51gkld" path="res://Scripts/CameraScript.gd" id="8_pgw7i"]
 [ext_resource type="Script" uid="uid://b8xxodxbidbqb" path="res://Scripts/CharactersGrid.gd" id="13_4v654"]
 [ext_resource type="Texture2D" uid="uid://et6k03k56ll8" path="res://Assets/Buttons/ButtonUp.png" id="13_ry528"]
 [ext_resource type="Script" uid="uid://dkqpbv5not42m" path="res://Scripts/MovementSelectionGrid.gd" id="13_yhlfj"]
@@ -111,6 +113,8 @@ script = ExtResource("1_cpm0q")
 texture_filter = 1
 script = ExtResource("2_c0f11")
 knight = ExtResource("3_leul7")
+wizard = ExtResource("4_wukv0")
+wordsmith = ExtResource("5_hgvmy")
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="TileMaps"]
 position = Vector2(-16, -16)
@@ -169,7 +173,6 @@ script = ExtResource("8_pgw7i")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 offset = Vector2(-350, -150)
 transform = Transform2D(1, 0, 0, 1, -350, -150)
-follow_viewport_enabled = true
 
 [node name="SudokuControlGrid" type="GridContainer" parent="CanvasLayer"]
 texture_filter = 1
@@ -178,9 +181,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
+offset_left = 220.0
+offset_top = 92.0
+offset_right = 260.0
+offset_bottom = 132.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 8
@@ -195,10 +199,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -168.0
-offset_top = -168.0
-offset_right = -40.0
-offset_bottom = -40.0
+offset_left = 138.0
+offset_top = -62.0
+offset_right = 266.0
+offset_bottom = 66.0
 grow_horizontal = 0
 grow_vertical = 0
 columns = 3
@@ -290,9 +294,10 @@ texture_filter = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -108.0
-offset_right = 40.0
-offset_bottom = 108.0
+offset_left = 363.0
+offset_top = -37.0
+offset_right = 427.0
+offset_bottom = 299.0
 grow_vertical = 2
 size_flags_horizontal = 2
 size_flags_vertical = 6
@@ -372,3 +377,6 @@ icon = ExtResource("15_gipt1")
 flat = true
 icon_alignment = 1
 expand_icon = true
+
+[node name="CamTarget" type="Node2D" parent="."]
+position = Vector2(200, 200)

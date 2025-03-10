@@ -1,5 +1,7 @@
 extends Control
 
+var game_difficulty = 1
+
 @export var Address = "127.0.0.1"
 @export var port = 8910
 var peer
@@ -20,32 +22,52 @@ func peer_disconnected(id):
 # Called only by clients
 func connected_to_server():
 	print("Connected to Server! ")
-	SendPlayerInfo.rpc_id(1, $LineEdit.text, multiplayer.get_unique_id())
+	SendPlayerInfo.rpc_id(1, $InputGroup/LineEdit.text, multiplayer.get_unique_id())
 
 func connection_failed():
 	print("Can't connect ")
 
 @rpc("any_peer")
 func SendPlayerInfo(name : String, id : int):
-	if !GameManager.Players.has(id):
-		GameManager.Players[id] = {
+	if !GameManager.GameState.Players.has(id):
+		GameManager.GameState.Players[id] = {
 			"name" : name,
 			"id": id,
 		}
 		
 		if multiplayer.is_server():
-			for i in GameManager.Players:
-				SendPlayerInfo.rpc(GameManager.Players[i].name, i)
+			for i in GameManager.GameState.Players:
+				SendPlayerInfo.rpc(GameManager.GameState.Players[i].name, i)
 
 @rpc("any_peer", "call_local")
 func StartGame():
 	var scene = load("res://Scenes/GameScene.tscn").instantiate()
 	get_tree().root.add_child(scene)
+	if multiplayer.is_server():
+		scene.host_create_game(game_difficulty)
+		print("You are host")
+		var json_str = JSON.stringify(GameManager.GameState)
+		SendGameState.rpc(json_str)
+	else:
+		print("You are a client")
+	print(GameManager.GameState, " for ID ", multiplayer.get_unique_id())
 	self.hide()
+
+@rpc("any_peer")
+func SendGameState(json_state):
+	var json = JSON.new()
+	var error = json.parse(json_state)
+	if error == OK:
+		GameManager.GameState = json.data
+	else:
+		print("Json parse error: ", json.get_error_message())
+	#GameManager.GameState.Players = players
+	#$"../GameScene/TileMaps".boards = boards
+	$"../GameScene".client_receive_game()
 
 func _on_host_button_down() -> void:
 	peer = ENetMultiplayerPeer.new()			# The server
-	var error = peer.create_server(port, 2)
+	var error = peer.create_server(port, 4)
 	if error != OK:
 		print("Can't host: " + error)
 		return
@@ -53,13 +75,12 @@ func _on_host_button_down() -> void:
 	# Save on bandwidth usage
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	
+	game_difficulty = int($InputGroup/DifficultyLevel.text)
+	
 	multiplayer.set_multiplayer_peer(peer)			# Adding the server as a peer
 	print("Waiting for Players ")
 	
-	SendPlayerInfo($LineEdit.text, multiplayer.get_unique_id())
-	
-	pass # Replace with function body.
-
+	SendPlayerInfo($InputGroup/LineEdit.text, multiplayer.get_unique_id())
 
 func _on_join_button_down() -> void:
 	peer = ENetMultiplayerPeer.new()
@@ -68,9 +89,6 @@ func _on_join_button_down() -> void:
 	# Save on bandwidth usage; Same compression
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
-	
-	pass # Replace with function body.
-
 
 func _on_start_button_down() -> void:
 	StartGame.rpc()

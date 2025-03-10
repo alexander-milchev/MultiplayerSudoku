@@ -10,6 +10,8 @@ class_name TileMapLogic
 @onready var characters_grid: Node2D = $CharactersGrid			# Holds characters on the grid
 
 @export var knight : PackedScene
+@export var wizard : PackedScene
+@export var wordsmith : PackedScene
 
 var players_count = 2
 var boards = []				# formatted as [board object, start x, start y, Boolean on wether board is finished]
@@ -24,9 +26,9 @@ func _ready() -> void:
 	var characters = []
 	var starts = []
 	var idx = 0
-	for i in GameManager.Players:
+	for i in GameManager.GameState.Players:
 		var newPlayer = knight.instantiate()
-		newPlayer.name = str(GameManager.Players[i].id)
+		newPlayer.name = str(GameManager.GameState.Players[i].id)
 		characters.append(newPlayer)
 		starts.append(player_starts[idx])
 		idx += 1
@@ -38,7 +40,8 @@ func _ready() -> void:
 
 	characters_grid.init_grid(MOVEMENT_GRID_SIZE, characters, player_starts)
 	
-	init_game()
+	# init_game()
+	display_boards_numbers()
 
 # Sets all the required empty cells and initialises the subgrid divisions
 func create_grid(start_x : int, start_y : int):
@@ -48,15 +51,21 @@ func create_grid(start_x : int, start_y : int):
 			var subsec = cell_consts.TOP_LEFT + Vector2i((i + start_x) % 3, (j + start_y) % 3)
 			subgrids_layer.set_cell(Vector2i(i + start_x, j + start_y), cell_consts.MAIN_SRC_ID ,subsec)
 
-func init_game():
+func init_game(diff: int):
 	# Create one new board for now
-	var game = SudokuBoard.new(1)
+	var game = SudokuBoard.new(diff)
 	game.makePuzzle()
 	boards.append([game, 0, 0, false])
-	
-	_set_boards_numbers()
+	GameManager.GameState.Boards[1] = {
+		"Inputs" : game.puzzle_inputs,
+		"Puzzle" : game.puzzle,
+		"Solution" : game.solution,
+		"X_Start" : 0,
+		"Y_Start" : 0
+	}
+	display_boards_numbers()
 
-func _set_boards_numbers():
+func display_boards_numbers():
 	for elem in boards:
 		var board : SudokuBoard
 		board = elem[0]

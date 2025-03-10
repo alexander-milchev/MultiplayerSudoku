@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://bmhgjamtx270c"]
+
+[ext_resource type="Script" uid="uid://bgkun8kpn8cfi" path="res://Scripts/Characters/Wordsmith.gd" id="1_hl5n3"]
+[ext_resource type="Texture2D" uid="uid://c41skfkgc3eqh" path="res://Assets/Wordsmith.png" id="2_k2687"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2is3"]
+atlas = ExtResource("2_k2687")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcvph"]
+atlas = ExtResource("2_k2687")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d87ct"]
+atlas = ExtResource("2_k2687")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ew8qh"]
+atlas = ExtResource("2_k2687")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0t3e8"]
+atlas = ExtResource("2_k2687")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w4lyc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i2is3")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcvph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d87ct")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ew8qh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0t3e8")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 4.0
+}]
+
+[node name="Wordsmith" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_hl5n3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_w4lyc")
+animation = &"Idle"
+frame_progress = 0.0343096
