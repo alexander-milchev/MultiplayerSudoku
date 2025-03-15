@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://b0har1358grpr"]
+
+[ext_resource type="Texture2D" uid="uid://dmf2re74qfppw" path="res://Assets/Mushroom.png" id="1_2t48f"]
+[ext_resource type="Script" uid="uid://nl0ncvsp2qr0" path="res://Scripts/Characters/Mushroom.gd" id="1_a2etd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2etd"]
+atlas = ExtResource("1_2t48f")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fo53b"]
+atlas = ExtResource("1_2t48f")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtxkl"]
+atlas = ExtResource("1_2t48f")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hw3d0"]
+atlas = ExtResource("1_2t48f")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j1f4e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2etd")
+}],
+"loop": true,
+"name": &"Full Grown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fo53b")
+}],
+"loop": true,
+"name": &"Growing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtxkl")
+}],
+"loop": true,
+"name": &"Pollinated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hw3d0")
+}],
+"loop": true,
+"name": &"Smol",
+"speed": 4.0
+}]
+
+[node name="Mushroom" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_a2etd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -11)
+sprite_frames = SubResource("SpriteFrames_j1f4e")
+animation = &"Smol"

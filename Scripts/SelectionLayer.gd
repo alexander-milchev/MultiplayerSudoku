@@ -1,6 +1,7 @@
 extends TileMapLayer
 const cell_consts = preload("res://Scripts/CellsConstants.gd")
 @onready var cells_layer: TileMapLayer = $"../CellsLayer"		# Accessed to check if cell should be selectable
+# @onready var cells_hl : TileMapLayer = $"../SelectionLayerHL"
 
 var selected_cell = Vector2i(-10, -10)
 

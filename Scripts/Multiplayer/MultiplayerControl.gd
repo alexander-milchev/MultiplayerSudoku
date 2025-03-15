@@ -22,22 +22,30 @@ func peer_disconnected(id):
 # Called only by clients
 func connected_to_server():
 	print("Connected to Server! ")
-	SendPlayerInfo.rpc_id(1, $InputGroup/LineEdit.text, multiplayer.get_unique_id())
+	var character_selected
+	if $InputGroup/CharacterSelect.get_selected_items().size() == 1:
+		character_selected = int($InputGroup/CharacterSelect.get_selected_items()[0])
+	else:					# If a character is not selected, default to knight
+		character_selected = 0
+	SendPlayerInfo.rpc_id(1, $InputGroup/LineEdit.text, multiplayer.get_unique_id(), character_selected)
 
 func connection_failed():
 	print("Can't connect ")
 
 @rpc("any_peer")
-func SendPlayerInfo(name : String, id : int):
+func SendPlayerInfo(name : String, id : int, character_selected : int):
 	if !GameManager.GameState.Players.has(id):
 		GameManager.GameState.Players[id] = {
 			"name" : name,
 			"id": id,
+			"character" : character_selected
 		}
 		
 		if multiplayer.is_server():
 			for i in GameManager.GameState.Players:
-				SendPlayerInfo.rpc(GameManager.GameState.Players[i].name, i)
+				SendPlayerInfo.rpc(GameManager.GameState.Players[i].name, i, GameManager.GameState.Players[i].character)
+		
+		print(GameManager.GameState)
 
 @rpc("any_peer", "call_local")
 func StartGame():
@@ -50,7 +58,6 @@ func StartGame():
 		SendGameState.rpc(json_str)
 	else:
 		print("You are a client")
-	print(GameManager.GameState, " for ID ", multiplayer.get_unique_id())
 	self.hide()
 
 @rpc("any_peer")
@@ -61,8 +68,6 @@ func SendGameState(json_state):
 		GameManager.GameState = json.data
 	else:
 		print("Json parse error: ", json.get_error_message())
-	#GameManager.GameState.Players = players
-	#$"../GameScene/TileMaps".boards = boards
 	$"../GameScene".client_receive_game()
 
 func _on_host_button_down() -> void:
@@ -79,8 +84,12 @@ func _on_host_button_down() -> void:
 	
 	multiplayer.set_multiplayer_peer(peer)			# Adding the server as a peer
 	print("Waiting for Players ")
-	
-	SendPlayerInfo($InputGroup/LineEdit.text, multiplayer.get_unique_id())
+	var character_selected
+	if $InputGroup/CharacterSelect.get_selected_items().size() == 1:
+		character_selected = int($InputGroup/CharacterSelect.get_selected_items()[0])
+	else:					# If a character is not selected, default to knight
+		character_selected = 0
+	SendPlayerInfo($InputGroup/LineEdit.text, multiplayer.get_unique_id(), character_selected)
 
 func _on_join_button_down() -> void:
 	peer = ENetMultiplayerPeer.new()

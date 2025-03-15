@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://6abf5bypw130"]
+[gd_scene load_steps=43 format=4 uid="uid://6abf5bypw130"]
 
 [ext_resource type="Script" uid="uid://b34eut5w6o7y6" path="res://Scripts/BoardsFrontend.gd" id="1_cpm0q"]
 [ext_resource type="Texture2D" uid="uid://c2o5raj6vtruy" path="res://Assets/Numbers&Cells.png" id="2_4woqn"]
@@ -8,10 +8,17 @@
 [ext_resource type="Script" uid="uid://d0b6hgkqc60ut" path="res://Scripts/SelectionLayer.gd" id="4_uxwto"]
 [ext_resource type="PackedScene" uid="uid://b4p8x2u82448d" path="res://Scenes/Characters/Wizard.tscn" id="4_wukv0"]
 [ext_resource type="PackedScene" uid="uid://bmhgjamtx270c" path="res://Scenes/Characters/Wordsmith.tscn" id="5_hgvmy"]
+[ext_resource type="PackedScene" uid="uid://bbwdwt8altly7" path="res://Scenes/Characters/Blob.tscn" id="6_4v654"]
+[ext_resource type="PackedScene" uid="uid://bglwlriqvbce8" path="res://Scenes/Characters/Monke.tscn" id="7_leul7"]
 [ext_resource type="Script" uid="uid://knpwfb51gkld" path="res://Scripts/CameraScript.gd" id="8_pgw7i"]
+[ext_resource type="PackedScene" uid="uid://b0har1358grpr" path="res://Scenes/Characters/Mushroom.tscn" id="8_wp4mh"]
+[ext_resource type="Texture2D" uid="uid://c2xpcpfftqcjj" path="res://Assets/CellDirt.png" id="11_em6uu"]
+[ext_resource type="Texture2D" uid="uid://cvpdg1a5j2wlg" path="res://Assets/ActionSelection.png" id="12_leul7"]
+[ext_resource type="Script" uid="uid://c0b044mntf6nn" path="res://Scripts/CellDirtLayer.gd" id="12_odb6r"]
 [ext_resource type="Script" uid="uid://b8xxodxbidbqb" path="res://Scripts/CharactersGrid.gd" id="13_4v654"]
 [ext_resource type="Texture2D" uid="uid://et6k03k56ll8" path="res://Assets/Buttons/ButtonUp.png" id="13_ry528"]
 [ext_resource type="Script" uid="uid://dkqpbv5not42m" path="res://Scripts/MovementSelectionGrid.gd" id="13_yhlfj"]
+[ext_resource type="Script" uid="uid://dsx3isbqq4xfh" path="res://Scripts/CharacterSelection.gd" id="13_yl3ua"]
 [ext_resource type="StyleBox" uid="uid://daywl6oqdwj1r" path="res://Assets/Styles/EmptyStyle.tres" id="14_hgvmy"]
 [ext_resource type="Texture2D" uid="uid://bnc12wgrrvxnq" path="res://Assets/Buttons/ButtonLeft.png" id="14_yhlfj"]
 [ext_resource type="Texture2D" uid="uid://cchxfnemjstga" path="res://Assets/Buttons/ButtonsConfirm.png" id="15_gipt1"]
@@ -22,6 +29,9 @@
 [ext_resource type="Texture2D" uid="uid://bxuu4rlb48xje" path="res://Assets/Buttons/ButtonsMop.png" id="20_hgvmy"]
 [ext_resource type="Texture2D" uid="uid://b6ewthjbt7fn8" path="res://Assets/Buttons/ButtonsMelee.png" id="21_ebcm8"]
 [ext_resource type="Texture2D" uid="uid://ccpxvsw1uc34p" path="res://Assets/Buttons/ButtonsSkill.png" id="22_4v654"]
+[ext_resource type="Texture2D" uid="uid://gwbocfpspbms" path="res://Assets/Buttons/ButtonBack.png" id="27_y0yaw"]
+[ext_resource type="Texture2D" uid="uid://be5oru66e1ur" path="res://Assets/Buttons/ButtonEnd.png" id="28_yl3ua"]
+[ext_resource type="Texture2D" uid="uid://b2dqtv0bte2lx" path="res://Assets/Buttons/ButtonsMovement.png" id="29_lko2l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x6js8"]
 texture = ExtResource("3_kilg5")
@@ -101,13 +111,49 @@ texture_region_size = Vector2i(32, 32)
 1:5/0 = 0
 2:5/0 = 0
 3:5/0 = 0
+4:5/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_wnmk1"]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_8sli2")
 
-[node name="GameScene" type="Node2D"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_odb6r"]
+texture = ExtResource("11_em6uu")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_p4lnl"]
+tile_size = Vector2i(32, 32)
+sources/2 = SubResource("TileSetAtlasSource_odb6r")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6gwdq"]
+texture = ExtResource("12_leul7")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_4v654"]
+tile_size = Vector2i(32, 32)
+sources/1 = SubResource("TileSetAtlasSource_6gwdq")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_leul7"]
+texture = ExtResource("12_leul7")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_wp4mh"]
+tile_size = Vector2i(32, 32)
+sources/1 = SubResource("TileSetAtlasSource_leul7")
+
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("tile_maps", "selection_grid", "selection_layer", "movement_buttons", "action_buttons", "characters_grid")]
 script = ExtResource("1_cpm0q")
+tile_maps = NodePath("TileMaps")
+selection_grid = NodePath("CanvasLayer/SudokuControlGrid")
+selection_layer = NodePath("TileMaps/SelectionLayer")
+movement_buttons = NodePath("CanvasLayer/MovementSelectionGrid")
+action_buttons = NodePath("CanvasLayer/ActionSelection")
+characters_grid = NodePath("TileMaps/CharactersGrid")
 
 [node name="TileMaps" type="Node2D" parent="."]
 texture_filter = 1
@@ -115,10 +161,13 @@ script = ExtResource("2_c0f11")
 knight = ExtResource("3_leul7")
 wizard = ExtResource("4_wukv0")
 wordsmith = ExtResource("5_hgvmy")
+blob = ExtResource("6_4v654")
+monke = ExtResource("7_leul7")
+mushroom = ExtResource("8_wp4mh")
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="TileMaps"]
 position = Vector2(-16, -16)
-tile_map_data = PackedByteArray("AAAAAAkAAQADAAIAAAABAAkAAQABAAQAAAACAAkAAQABAAQAAAADAAkAAQABAAQAAAAEAAkAAQABAAQAAAAFAAkAAQADAAMAAAAGAAkAAQAHAAMAAAAHAAkAAQACAAQAAAAIAAkAAQAHAAIAAAAJAAkAAQACAAEAAAAJAAgAAQADAAIAAAAJAAcAAQABAAAAAAAJAAYAAQABAAQAAAAJAAUAAQABAAEAAAAJAAQAAQADAAIAAAAJAAMAAQADAAIAAAAJAAIAAQADAAIAAAAJAAEAAQADAAIAAAAJAAAAAQACAAAAAAAAAAAAAQAAAAQAAAABAAEAAQAFAAIAAAAAAAEAAQAEAAAAAAAAAAIAAQAHAAMAAAABAAIAAQAHAAIAAAACAAIAAQACAAAAAAACAAEAAQAGAAIAAAACAAAAAQAGAAMAAAABAAAAAQAEAAAAAAADAAAAAQAGAAMAAAADAAEAAQAGAAIAAAADAAIAAQACAAIAAAADAAMAAQABAAQAAAACAAMAAQADAAIAAAABAAMAAQAHAAIAAAAAAAMAAQAHAAMAAAAAAAQAAQAHAAMAAAABAAQAAQAHAAIAAAACAAQAAQACAAEAAAADAAQAAQACAAMAAAABAAUAAQAGAAEAAAAAAAUAAQAHAAMAAAAAAAYAAQAEAAEAAAABAAYAAQAGAAIAAAACAAUAAQAGAAMAAAADAAUAAQAFAAAAAAAEAAAAAQAGAAMAAAAEAAEAAQAGAAIAAAAEAAIAAQACAAIAAAAEAAMAAQAAAAAAAAAEAAQAAQADAAEAAAAFAAAAAQAGAAMAAAAGAAAAAQAGAAMAAAAHAAAAAQAGAAMAAAAIAAAAAQAFAAAAAAAFAAEAAQAGAAIAAAAGAAEAAQAHAAAAAAAHAAEAAQACAAQAAAAIAAEAAQAHAAIAAAAFAAIAAQADAAAAAAAGAAIAAQAHAAMAAAAHAAIAAQACAAQAAAAIAAIAAQAHAAIAAAABAAcAAQACAAIAAAACAAYAAQAGAAIAAAADAAYAAQAFAAEAAAAEAAYAAQACAAAAAAAFAAYAAQACAAIAAAAGAAYAAQACAAIAAAAHAAYAAQABAAEAAAAIAAYAAQABAAQAAAAIAAcAAQACAAMAAAAIAAgAAQAFAAAAAAAGAAcAAQACAAMAAAAFAAcAAQAAAAAAAAAEAAcAAQABAAEAAAAHAAcAAQACAAMAAAAHAAgAAQAGAAMAAAAGAAgAAQAEAAAAAAAFAAgAAQADAAMAAAAEAAgAAQABAAQAAAADAAgAAQABAAQAAAACAAgAAQABAAQAAAABAAgAAQABAAQAAAAAAAcAAQACAAAAAAAAAAgAAQADAAIAAAACAAcAAQACAAIAAAADAAcAAQACAAIAAAAEAAUAAQAAAAQAAAAHAAUAAQACAAAAAAAGAAUAAQAFAAEAAAAHAAQAAQAGAAIAAAAGAAQAAQAFAAIAAAAHAAMAAQACAAQAAAAGAAMAAQAHAAMAAAAIAAQAAQAFAAEAAAAIAAMAAQAHAAIAAAAFAAMAAQADAAEAAAAFAAQAAQAEAAAAAAAFAAUAAQAEAAEAAAADAAoAAQABAAQAAAADAAsAAQABAAQAAAADAAwAAQACAAMAAAAEAAwAAQACAAMAAAAFAAwAAQACAAMAAAAGAAwAAQACAAMAAAAHAAwAAQACAAMAAAAIAAwAAQACAAMAAAAJAAwAAQACAAMAAAAKAAwAAQACAAMAAAALAAwAAQACAAMAAAAMAAwAAQADAAEAAAAMAAsAAQADAAAAAAAMAAoAAQADAAEAAAAMAAkAAQADAAAAAAAMAAgAAQAGAAIAAAAMAAcAAQAGAAMAAAAMAAYAAQADAAEAAAAMAAUAAQADAAMAAAAMAAQAAQADAAMAAAAMAAMAAQADAAMAAAAKAAMAAQABAAQAAAALAAMAAQABAAQAAAAKAAQAAQABAAQAAAALAAQAAQABAAQAAAAGAAoAAQAEAAEAAAAGAAsAAQACAAIAAAAEAAoAAQABAAQAAAAFAAoAAQADAAMAAAAEAAsAAQABAAQAAAAFAAsAAQAAAAEAAAAHAAsAAQACAAIAAAAIAAsAAQACAAIAAAAJAAsAAQABAAEAAAAKAAsAAQAAAAEAAAALAAsAAQACAAIAAAALAAoAAQACAAMAAAALAAkAAQACAAIAAAALAAgAAQAEAAEAAAALAAcAAQAEAAAAAAALAAYAAQACAAMAAAALAAUAAQABAAQAAAAKAAUAAQABAAQAAAAKAAYAAQAAAAAAAAAKAAcAAQADAAMAAAAKAAgAAQADAAMAAAAKAAkAAQAAAAMAAAAKAAoAAQABAAMAAAAJAAoAAQACAAAAAAAIAAoAAQAFAAEAAAAHAAoAAQAGAAIAAAAAAAoAAQADAAIAAAABAAoAAQABAAQAAAACAAoAAQABAAQAAAACAAsAAQABAAQAAAABAAsAAQABAAQAAAAAAAsAAQADAAIAAAAAAAwAAQACAAEAAAABAAwAAQACAAMAAAACAAwAAQACAAMAAAAKAAIAAQABAAQAAAALAAIAAQABAAQAAAAMAAIAAQADAAMAAAAKAAEAAQABAAQAAAALAAEAAQABAAQAAAAMAAEAAQADAAMAAAAKAAAAAQACAAIAAAALAAAAAQACAAIAAAAMAAAAAQADAAAAAAAIAAUAAQACAAIAAAD/////AQAGAAAAAAAAAP//AQAGAAIAAAABAP//AQAGAAIAAAACAP//AQAGAAIAAAADAP//AQAGAAIAAAAEAP//AQAGAAIAAAAFAP//AQAGAAIAAAAGAP//AQAGAAIAAAAHAP//AQAGAAIAAAAIAP//AQAGAAIAAAAJAP//AQAGAAIAAAAKAP//AQAGAAIAAAALAP//AQAGAAIAAAAMAP//AQAGAAIAAAANAP//AQAHAAAAAAANAAAAAQAHAAMAAAANAAEAAQAHAAMAAAANAAIAAQAHAAMAAAANAAMAAQAHAAMAAAANAAQAAQAHAAMAAAANAAUAAQAHAAMAAAANAAYAAQAHAAMAAAANAAcAAQAHAAEAAAANAAgAAQAHAAAAAAANAAkAAQAHAAMAAAANAAoAAQAHAAMAAAANAAsAAQAHAAMAAAANAAwAAQAHAAMAAAANAA0AAQAHAAEAAAAMAA0AAQAGAAMAAAALAA0AAQAGAAMAAAAKAA0AAQAGAAMAAAAJAA0AAQAGAAMAAAAIAA0AAQAGAAMAAAAHAA0AAQAGAAMAAAAGAA0AAQAGAAMAAAAFAA0AAQAGAAMAAAAEAA0AAQAGAAMAAAADAA0AAQAGAAMAAAACAA0AAQAGAAMAAAABAA0AAQAGAAMAAAAAAA0AAQAGAAMAAAD//w0AAQAGAAEAAAD//wwAAQAHAAIAAAD//wsAAQAHAAIAAAD//woAAQAHAAIAAAD//wkAAQAHAAIAAAD//wgAAQAHAAIAAAD//wcAAQAHAAIAAAD//wYAAQAHAAIAAAD//wUAAQAHAAIAAAD//wQAAQAHAAIAAAD//wMAAQAHAAIAAAD//wIAAQAHAAIAAAD//wEAAQAHAAIAAAD//wAAAQAHAAIAAAA=")
+tile_map_data = PackedByteArray("AAAAAAkAAQADAAIAAAABAAkAAQABAAQAAAACAAkAAQABAAQAAAADAAkAAQABAAQAAAAEAAkAAQABAAQAAAAFAAkAAQADAAMAAAAGAAkAAQAHAAMAAAAHAAkAAQACAAQAAAAIAAkAAQAHAAIAAAAJAAkAAQADAAIAAAAJAAgAAQADAAIAAAAJAAcAAQABAAAAAAAJAAYAAQABAAQAAAAJAAUAAQABAAQAAAAJAAQAAQACAAIAAAAJAAMAAQAFAAEAAAAJAAIAAQAHAAIAAAAJAAEAAQAHAAIAAAAJAAAAAQAFAAAAAAAAAAAAAQAAAAQAAAABAAEAAQAFAAIAAAAAAAEAAQAEAAAAAAAAAAIAAQAHAAMAAAABAAIAAQAHAAIAAAACAAIAAQACAAAAAAACAAEAAQAGAAIAAAACAAAAAQAGAAMAAAABAAAAAQAEAAAAAAADAAAAAQAGAAMAAAADAAEAAQAGAAIAAAADAAIAAQACAAIAAAADAAMAAQABAAQAAAACAAMAAQADAAIAAAABAAMAAQAHAAIAAAAAAAMAAQAHAAMAAAAAAAQAAQAHAAMAAAABAAQAAQAHAAIAAAACAAQAAQADAAIAAAADAAQAAQABAAQAAAABAAUAAQAHAAIAAAAAAAUAAQAHAAMAAAAAAAYAAQAEAAEAAAABAAYAAQAFAAEAAAACAAUAAQADAAIAAAADAAUAAQABAAQAAAAEAAAAAQAGAAMAAAAEAAEAAQAGAAIAAAAEAAIAAQACAAIAAAAEAAMAAQABAAQAAAAEAAQAAQABAAQAAAAFAAAAAQAGAAMAAAAGAAAAAQAGAAMAAAAHAAAAAQAGAAMAAAAIAAAAAQAGAAMAAAAFAAEAAQAGAAIAAAAGAAEAAQAHAAAAAAAHAAEAAQACAAQAAAAIAAEAAQACAAQAAAAFAAIAAQADAAAAAAAGAAIAAQAHAAMAAAAHAAIAAQACAAQAAAAIAAIAAQACAAQAAAABAAcAAQACAAIAAAACAAYAAQADAAIAAAADAAYAAQABAAQAAAAEAAYAAQABAAQAAAAFAAYAAQABAAQAAAAGAAYAAQABAAQAAAAHAAYAAQABAAQAAAAIAAYAAQABAAQAAAAIAAcAAQACAAMAAAAIAAgAAQAFAAAAAAAGAAcAAQACAAMAAAAFAAcAAQAAAAAAAAAEAAcAAQABAAQAAAAHAAcAAQACAAMAAAAHAAgAAQAGAAMAAAAGAAgAAQAEAAAAAAAFAAgAAQADAAMAAAAEAAgAAQABAAQAAAADAAgAAQABAAQAAAACAAgAAQABAAQAAAABAAgAAQABAAQAAAAAAAcAAQACAAAAAAAAAAgAAQADAAIAAAACAAcAAQABAAEAAAADAAcAAQABAAQAAAAEAAUAAQABAAQAAAAHAAUAAQABAAQAAAAGAAUAAQABAAQAAAAHAAQAAQACAAIAAAAGAAQAAQACAAIAAAAHAAMAAQAGAAIAAAAGAAMAAQAEAAEAAAAIAAQAAQACAAIAAAAIAAMAAQAGAAIAAAAFAAMAAQADAAMAAAAFAAQAAQAAAAEAAAAFAAUAAQABAAQAAAADAAoAAQABAAQAAAADAAsAAQABAAQAAAADAAwAAQACAAMAAAAEAAwAAQACAAMAAAAFAAwAAQACAAMAAAAGAAwAAQACAAMAAAAHAAwAAQACAAMAAAAIAAwAAQACAAMAAAAJAAwAAQACAAMAAAAKAAwAAQACAAMAAAALAAwAAQACAAMAAAAMAAwAAQADAAEAAAAMAAsAAQADAAMAAAAMAAoAAQADAAMAAAAMAAkAAQADAAMAAAAMAAgAAQADAAMAAAAMAAcAAQADAAMAAAAMAAYAAQADAAMAAAAMAAUAAQADAAMAAAAMAAQAAQADAAMAAAAMAAMAAQADAAMAAAAKAAMAAQADAAIAAAALAAMAAQABAAQAAAAKAAQAAQABAAEAAAALAAQAAQABAAQAAAAGAAoAAQAEAAEAAAAGAAsAAQACAAIAAAAEAAoAAQABAAQAAAAFAAoAAQADAAMAAAAEAAsAAQABAAQAAAAFAAsAAQAAAAEAAAAHAAsAAQACAAIAAAAIAAsAAQACAAIAAAAJAAsAAQABAAEAAAAKAAsAAQABAAQAAAALAAsAAQABAAQAAAALAAoAAQABAAQAAAALAAkAAQABAAQAAAALAAgAAQABAAQAAAALAAcAAQABAAQAAAALAAYAAQABAAQAAAALAAUAAQABAAQAAAAKAAUAAQABAAQAAAAKAAYAAQABAAQAAAAKAAcAAQABAAQAAAAKAAgAAQABAAQAAAAKAAkAAQABAAQAAAAKAAoAAQABAAQAAAAJAAoAAQADAAIAAAAIAAoAAQAFAAEAAAAHAAoAAQAGAAIAAAAAAAoAAQADAAIAAAABAAoAAQABAAQAAAACAAoAAQABAAQAAAACAAsAAQABAAQAAAABAAsAAQABAAQAAAAAAAsAAQADAAIAAAAAAAwAAQACAAEAAAABAAwAAQACAAMAAAACAAwAAQACAAMAAAAKAAIAAQADAAIAAAALAAIAAQABAAQAAAAMAAIAAQADAAMAAAAKAAEAAQADAAIAAAALAAEAAQABAAQAAAAMAAEAAQADAAMAAAAKAAAAAQACAAAAAAALAAAAAQACAAIAAAAMAAAAAQADAAAAAAAIAAUAAQABAAQAAAD/////AQAGAAAAAAAAAP//AQAGAAIAAAABAP//AQAGAAIAAAACAP//AQAGAAIAAAADAP//AQAGAAIAAAAEAP//AQAGAAIAAAAFAP//AQAGAAIAAAAGAP//AQAGAAIAAAAHAP//AQAGAAIAAAAIAP//AQAGAAIAAAAJAP//AQAGAAIAAAAKAP//AQAGAAIAAAALAP//AQAGAAIAAAAMAP//AQAGAAIAAAANAP//AQAHAAAAAAANAAAAAQAHAAMAAAANAAEAAQAHAAMAAAANAAIAAQAHAAMAAAANAAMAAQAHAAMAAAANAAQAAQAHAAMAAAANAAUAAQAHAAMAAAANAAYAAQAHAAMAAAANAAcAAQAHAAMAAAANAAgAAQAHAAMAAAANAAkAAQAHAAMAAAANAAoAAQAHAAMAAAANAAsAAQAHAAMAAAANAAwAAQAHAAMAAAANAA0AAQAHAAEAAAAMAA0AAQAGAAMAAAALAA0AAQAGAAMAAAAKAA0AAQAGAAMAAAAJAA0AAQAGAAMAAAAIAA0AAQAGAAMAAAAHAA0AAQAGAAMAAAAGAA0AAQAGAAMAAAAFAA0AAQAGAAMAAAAEAA0AAQAGAAMAAAADAA0AAQAGAAMAAAACAA0AAQAGAAMAAAABAA0AAQAGAAMAAAAAAA0AAQAGAAMAAAD//w0AAQAGAAEAAAD//wwAAQAHAAIAAAD//wsAAQAHAAIAAAD//woAAQAHAAIAAAD//wkAAQAHAAIAAAD//wgAAQAHAAIAAAD//wcAAQAHAAIAAAD//wYAAQAHAAIAAAD//wUAAQAHAAIAAAD//wQAAQAHAAIAAAD//wMAAQAHAAIAAAD//wIAAQAHAAIAAAD//wEAAQAHAAIAAAD//wAAAQAHAAIAAAA=")
 tile_set = SubResource("TileSet_hbjgr")
 
 [node name="CellsLayer" type="TileMapLayer" parent="TileMaps"]
@@ -159,9 +208,26 @@ tile_set = SubResource("TileSet_wnmk1")
 [node name="Note9" type="TileMapLayer" parent="TileMaps/NotesHolder"]
 tile_set = SubResource("TileSet_wnmk1")
 
+[node name="CellDirtLayer" type="TileMapLayer" parent="TileMaps"]
+tile_set = SubResource("TileSet_p4lnl")
+script = ExtResource("12_odb6r")
+
+[node name="SelectionLayerHL" type="TileMapLayer" parent="TileMaps"]
+tile_set = SubResource("TileSet_4v654")
+
 [node name="SelectionLayer" type="TileMapLayer" parent="TileMaps"]
 tile_set = SubResource("TileSet_wnmk1")
 script = ExtResource("4_uxwto")
+
+[node name="CharacterLayerHL" type="TileMapLayer" parent="TileMaps"]
+position = Vector2(-16, -16)
+tile_set = SubResource("TileSet_4v654")
+
+[node name="CharacterLayerSelect" type="TileMapLayer" parent="TileMaps"]
+position = Vector2(-16, -16)
+enabled = false
+tile_set = SubResource("TileSet_wp4mh")
+script = ExtResource("13_yl3ua")
 
 [node name="CharactersGrid" type="Node2D" parent="TileMaps"]
 script = ExtResource("13_4v654")
@@ -199,10 +265,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 138.0
-offset_top = -62.0
-offset_right = 266.0
-offset_bottom = 66.0
+offset_left = 73.0
+offset_top = -117.0
+offset_right = 273.0
+offset_bottom = 83.0
 grow_horizontal = 0
 grow_vertical = 0
 columns = 3
@@ -226,6 +292,7 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 layout_mode = 2
 icon = ExtResource("13_ry528")
 flat = true
+expand_icon = true
 
 [node name="PanelContainer3" type="PanelContainer" parent="CanvasLayer/MovementSelectionGrid"]
 layout_mode = 2
@@ -243,6 +310,7 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 layout_mode = 2
 icon = ExtResource("14_yhlfj")
 flat = true
+expand_icon = true
 
 [node name="ConfirmContainer" type="PanelContainer" parent="CanvasLayer/MovementSelectionGrid"]
 layout_mode = 2
@@ -254,6 +322,7 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 layout_mode = 2
 icon = ExtResource("15_gipt1")
 flat = true
+expand_icon = true
 
 [node name="RightContainer" type="PanelContainer" parent="CanvasLayer/MovementSelectionGrid"]
 layout_mode = 2
@@ -265,6 +334,7 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 layout_mode = 2
 icon = ExtResource("16_pgw7i")
 flat = true
+expand_icon = true
 
 [node name="PanelContainer7" type="PanelContainer" parent="CanvasLayer/MovementSelectionGrid"]
 layout_mode = 2
@@ -282,6 +352,7 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 layout_mode = 2
 icon = ExtResource("17_v7xhk")
 flat = true
+expand_icon = true
 
 [node name="PanelContainer9" type="PanelContainer" parent="CanvasLayer/MovementSelectionGrid"]
 layout_mode = 2
@@ -295,13 +366,29 @@ anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 363.0
-offset_top = -37.0
+offset_top = -91.0
 offset_right = 427.0
-offset_bottom = 299.0
+offset_bottom = 313.0
 grow_vertical = 2
 size_flags_horizontal = 2
 size_flags_vertical = 6
 script = ExtResource("20_ebcm8")
+
+[node name="ConfirmContainer" type="PanelContainer" parent="CanvasLayer/ActionSelection"]
+clip_contents = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("14_hgvmy")
+
+[node name="Button" type="Button" parent="CanvasLayer/ActionSelection/ConfirmContainer"]
+layout_mode = 2
+disabled = true
+icon = ExtResource("15_gipt1")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="HintContainer" type="PanelContainer" parent="CanvasLayer/ActionSelection"]
 clip_contents = true
@@ -313,6 +400,7 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 
 [node name="Button" type="Button" parent="CanvasLayer/ActionSelection/HintContainer"]
 layout_mode = 2
+disabled = true
 icon = ExtResource("19_wukv0")
 flat = true
 icon_alignment = 1
@@ -328,6 +416,7 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 
 [node name="Button" type="Button" parent="CanvasLayer/ActionSelection/MopContainer"]
 layout_mode = 2
+disabled = true
 icon = ExtResource("20_hgvmy")
 flat = true
 icon_alignment = 1
@@ -343,6 +432,7 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 
 [node name="Button" type="Button" parent="CanvasLayer/ActionSelection/AttackContainer"]
 layout_mode = 2
+disabled = true
 icon = ExtResource("21_ebcm8")
 flat = true
 icon_alignment = 1
@@ -358,7 +448,40 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 
 [node name="Button" type="Button" parent="CanvasLayer/ActionSelection/AbilityContainer"]
 layout_mode = 2
+disabled = true
 icon = ExtResource("22_4v654")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="BackContainer" type="PanelContainer" parent="CanvasLayer/ActionSelection"]
+clip_contents = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("14_hgvmy")
+
+[node name="Button" type="Button" parent="CanvasLayer/ActionSelection/BackContainer"]
+layout_mode = 2
+disabled = true
+icon = ExtResource("27_y0yaw")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="MoveContainer" type="PanelContainer" parent="CanvasLayer/ActionSelection"]
+clip_contents = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("14_hgvmy")
+
+[node name="Button" type="Button" parent="CanvasLayer/ActionSelection/MoveContainer"]
+layout_mode = 2
+disabled = true
+icon = ExtResource("29_lko2l")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -373,7 +496,8 @@ theme_override_styles/panel = ExtResource("14_hgvmy")
 
 [node name="Button" type="Button" parent="CanvasLayer/ActionSelection/EndTurnContainer"]
 layout_mode = 2
-icon = ExtResource("15_gipt1")
+disabled = true
+icon = ExtResource("28_yl3ua")
 flat = true
 icon_alignment = 1
 expand_icon = true

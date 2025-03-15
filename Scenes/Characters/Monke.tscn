@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://bglwlriqvbce8"]
+
+[ext_resource type="Texture2D" uid="uid://beesqk0wnlecx" path="res://Assets/Monke.png" id="1_5qw6y"]
+[ext_resource type="Script" uid="uid://chjdbeqrgx6ew" path="res://Scripts/Characters/Monke.gd" id="1_32jqg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32jqg"]
+atlas = ExtResource("1_5qw6y")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yantc"]
+atlas = ExtResource("1_5qw6y")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1s3a"]
+atlas = ExtResource("1_5qw6y")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u182t"]
+atlas = ExtResource("1_5qw6y")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04ngb"]
+atlas = ExtResource("1_5qw6y")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r3yhl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32jqg")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yantc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1s3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u182t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04ngb")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 4.0
+}]
+
+[node name="Monke" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_32jqg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -10)
+sprite_frames = SubResource("SpriteFrames_r3yhl")
+animation = &"Idle"

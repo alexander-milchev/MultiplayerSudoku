@@ -1,7 +1,10 @@
 extends Node
 
 const MAIN_SRC_ID = 0
+const CHAR_LYR_SRC_ID = 1
+const DIRT_LYR_SRC_ID = 2
 
+const UNCHECKED_CELL = Vector2i(4, 5)
 const BLANK_CELL = Vector2i(3, 5)
 const INCORRECT_CELL = Vector2i(2, 5)
 const CORRECT_CELL = Vector2i(1, 5)
@@ -37,3 +40,8 @@ const MIDDLE_RIGHT = Vector2i(2, 3)
 const BOTTOM_LEFT = Vector2i(0, 4)
 const BOTTOM_MIDDLE = Vector2i(1, 4)
 const BOTTOM_RIGHT = Vector2i(2, 4)
+
+const CHAR_LYR_HL = Vector2i(0, 0)
+const CHAR_LYR_SELECTED = Vector2i(1, 0)
+
+const GOOP = Vector2i(0, 0)

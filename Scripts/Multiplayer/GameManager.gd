@@ -4,5 +4,3 @@ var GameState = {
 	"Players" : {},
 	"Boards" : {}
 }
-
-var Players = {}
